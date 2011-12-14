@@ -1,0 +1,10 @@
+{
+  "name": "jquery-deferred-some",
+  "author": "Francois Lafortune, @quickredfox",
+  "description": "Adds $.whenSome(), $.whenOne(), $.whenNone(), $.whenAll() promise handlers to jQuery.",
+  "version": "0.0.1",
+  "main": "lib/jquery-deferred-some.js",
+  "dependencies": {
+    "jquery": ">=1.5"
+  }
+}
