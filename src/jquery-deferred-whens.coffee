@@ -1,7 +1,11 @@
-# ###
-#   jquery-deferred-some.js
-#   
-# ###
+###
+*
+*   jquery-deferred-whens.coffee/jquery-deferred-whens.js
+*   Copyright 2011 Francois Lafortune, @quickredfox
+*   Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+*  
+###
+
 if !jQuery.Deferred then throw "Your version of jQuery does not contain the $.Deferred() implementation."
 
 _promise = (values)-> values.map ( value )-> jQuery.when value
@@ -13,32 +17,32 @@ _when = ( promise, method, data, callback)->
             return all
         , data
     
-whenSome = ( promises=[], results=[] , errors=[], final= jQuery.Deferred() )->
+whenSome = ( promises=[], results=[] , errors=[], terminal= jQuery.Deferred() )->
     if promises.length is 0
-        if results.length > 0 then return final.resolveWith( null, results ) 
-        else return final.rejectWith( null, errors )        
+        if results.length > 0 then return terminal.resolveWith( null, results ) 
+        else return terminal.rejectWith( null, errors )        
     promise  = promises.shift()
-    _when promise, 'fail', errors,  ()-> whenSome promises, results, errors, final        
-    _when promise, 'done', results, ()-> whenSome promises, results, errors, final
-    return final.promise()
+    _when promise, 'fail', errors,  ()-> whenSome promises, results, errors, terminal        
+    _when promise, 'done', results, ()-> whenSome promises, results, errors, terminal
+    return terminal.promise()
 
-whenOne = ( promises=[], results=[] , errors=[], final= jQuery.Deferred() )->
+whenOne = ( promises=[], results=[] , errors=[], terminal= jQuery.Deferred() )->
     if promises.length is 0
-        if results.length > 0 then return final.resolveWith( null, results ) 
-        else return final.rejectWith( null, errors )
+        if results.length > 0 then return terminal.resolveWith( null, results ) 
+        else return terminal.rejectWith( null, errors )
     promise = promises.shift()
-    _when promise, 'fail', errors,  ( errors )-> whenOne promises, results, errors, final
-    _when promise, 'done', results, ( results)-> final.resolveWith null, results
-    return final.promise()
+    _when promise, 'fail', errors,  ( errors )-> whenOne promises, results, errors, terminal
+    _when promise, 'done', results, ( results)-> terminal.resolveWith null, results
+    return terminal.promise()
 
-whenNone = ( promises=[], results=[] , errors=[], final= jQuery.Deferred() )->
+whenNone = ( promises=[], results=[] , errors=[], terminal= jQuery.Deferred() )->
     if promises.length is 0
-        if results.length > 0 then return final.rejectWith( null, results ) 
-        else return final.resolveWith( null, errors )
+        if results.length > 0 then return terminal.rejectWith( null, results ) 
+        else return terminal.resolveWith( null, errors )
     promise = promises.shift()
-    _when promise, 'fail', errors,  ( errors )-> whenNone promises, results, errors, final
-    _when promise, 'done', results, ( results)-> whenNone promises, results, errors, final
-    return final.promise()
+    _when promise, 'fail', errors,  ( errors )-> whenNone promises, results, errors, terminal
+    _when promise, 'done', results, ( results)-> whenNone promises, results, errors, terminal
+    return terminal.promise()
 
 ###
     jQuery.whenSome( deferred [, deferred, deferred, deferred, ... ] )

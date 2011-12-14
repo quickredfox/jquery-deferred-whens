@@ -1,6 +1,5 @@
-  
-GLOBAL.jQuery = require 'jquery'
-require './jquery-deferred-some'
+  GLOBAL.jQuery = require 'jquery'
+require './jquery-deferred-whens'
 
 fastFailing = ()-> jQuery.Deferred().reject('fast fail').promise()
     
