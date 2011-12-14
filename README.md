@@ -7,6 +7,7 @@ In other words, it provides functions similar to jQuery.when() for those times y
 ## Usage 
 
 Include either jquery-deferred-whens.js or jquery-deferred-whens.min.js in you page after jQuery
+
     <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
     <script src="https://raw.github.com/quickredfox/jquery-deferred-whens/master/lib/jquery-deferred-whens.min.js"></script>
 
